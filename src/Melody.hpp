@@ -2,6 +2,8 @@
 
 #include <Arduino.h>
 
+#include "Pitches.hpp"
+
 #if !defined(_countof)
 #define _countof(array) (sizeof(array) / sizeof(array[0]))
 #endif

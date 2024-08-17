@@ -1,10 +1,10 @@
 #include "AtomJoystick.hpp"
 
 const melody_tone_t AtomJoystick::STARTUP_MELODY[] = {
-    {294, 200},
-    {441, 200},
-    {350, 200},
-    {393, 200},
+    {NOTE_D4, 200},
+    {NOTE_A4, 200},
+    {NOTE_F4, 200},
+    {NOTE_G4, 200},
 };
 
 AtomJoystick::AtomJoystick(uint8_t buzzerPin) : _melody(buzzerPin) {
