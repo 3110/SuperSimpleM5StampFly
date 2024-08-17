@@ -14,5 +14,11 @@ AtomJoystick::~AtomJoystick(void) {
 }
 
 bool AtomJoystick::begin(void) {
-    return _melody.play(STARTUP_MELODY, _countof(STARTUP_MELODY));
+    return play(STARTUP_MELODY, _countof(STARTUP_MELODY));
+}
+
+}
+
+bool AtomJoystick::play(const melody_tone_t melody[], size_t size) const {
+    return _melody.play(melody, size);
 }

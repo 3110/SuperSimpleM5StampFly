@@ -28,6 +28,13 @@ public:
      * @return 初期化が成功した場合はtrue、失敗した場合はfalse
      */
     virtual bool begin(void);
+    /**
+     * @brief メロディを再生します
+     * @param melody メロディ
+     * @param size メロディのサイズ
+     * @return 再生が成功した場合はtrue、失敗した場合はfalse
+     */
+    virtual bool play(const melody_tone_t melody[], size_t size) const;
 
 private:
     Melody _melody;
