@@ -28,3 +28,4 @@
 ### SuperSimpleM5StampFly
 
 - [SuperSimpleM5StampFly](https://github.com/GOROman/SuperSimpleM5StampFly)（GOROman さん）
+- [SuperSimpleM5StampFly](https://github.com/kakimochi/SuperSimpleM5StampFly)（かきもちさん）
