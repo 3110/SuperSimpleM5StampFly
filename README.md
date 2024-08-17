@@ -15,7 +15,6 @@
 - [M5Stamp Fly with M5StampS3](https://shop.m5stack.com/products/m5stamp-fly-with-m5stamps3)（販売ページ）
 - [Stamp Fly](https://docs.m5stack.com/en/app/Stamp%20Fly)（ドキュメント）
 - [M5StampFly](https://github.com/m5stack/M5StampFly)（ライブラリ）
-
 - [M5Atom Joystick with M5AtomS3](https://shop.m5stack.com/products/atom-joystick-with-m5atoms3)（販売ページ）
 - [Atom JoyStick](https://docs.m5stack.com/en/app/Atom%20JoyStick)（ドキュメント）
 - [Atom-JoyStick](https://github.com/m5stack/Atom-JoyStick)（ライブラリ）
