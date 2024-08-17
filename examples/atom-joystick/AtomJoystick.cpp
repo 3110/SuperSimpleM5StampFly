@@ -17,6 +17,8 @@ bool AtomJoystick::begin(void) {
     return play(STARTUP_MELODY, _countof(STARTUP_MELODY));
 }
 
+void AtomJoystick::beep(void) const {
+    _melody.beep();
 }
 
 bool AtomJoystick::play(const melody_tone_t melody[], size_t size) const {

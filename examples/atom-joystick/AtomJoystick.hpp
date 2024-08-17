@@ -29,6 +29,10 @@ public:
      */
     virtual bool begin(void);
     /**
+     * @brief ビープ音を鳴らします
+     */
+    virtual void beep(void) const;
+    /**
      * @brief メロディを再生します
      * @param melody メロディ
      * @param size メロディのサイズ
