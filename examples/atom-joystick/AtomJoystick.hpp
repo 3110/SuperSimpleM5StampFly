@@ -18,7 +18,7 @@ public:
     /**
      * @brief レジスタ
      */
-    enum class Register
+    enum class register_t
     {
         JOY1_ADC_VALUE_128ITS = 0x00,
         JOY1_ADC_VALUE_8BITS = 0x10,
@@ -57,7 +57,7 @@ public:
     /**
      * @brief バッテリの位置
      */
-    enum class Battery
+    enum class battery_t
     {
         BATTERY_1 = 0,
         BATTERY_2,
@@ -133,7 +133,7 @@ public:
      * @param voltage バッテリーの電圧
      * @return 取得が成功した場合はtrue、失敗した場合はfalse
      */
-    virtual bool getBatteryVoltage(Battery battery, float &voltage) const;
+    virtual bool getBatteryVoltage(battery_t battery, float &voltage) const;
 
     /**
      * @brief バッテリーの値を取得します
@@ -142,7 +142,7 @@ public:
      * @param value バッテリーの値
      * @return 取得が成功した場合はtrue、失敗した場合はfalse
      */
-    virtual bool getBatteryValue(Battery battery, adc_mode_t mode,
+    virtual bool getBatteryValue(battery_t battery, adc_mode_t mode,
                                  uint16_t &value) const;
 
 protected:
@@ -159,7 +159,7 @@ protected:
      * @param size データのサイズ
      * @return 読み込みが成功した場合はtrue、失敗した場合はfalse
      */
-    virtual bool read(Register register, uint8_t *data, size_t size) const;
+    virtual bool read(register_t register, uint8_t *data, size_t size) const;
 
 private:
     TwoWire *_wire;

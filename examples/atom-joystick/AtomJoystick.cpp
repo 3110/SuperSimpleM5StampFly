@@ -36,12 +36,12 @@ bool AtomJoystick::begin(TwoWire &wire, uint8_t address, uint8_t sda,
     ESP_LOGD(TAG, "Version: Firmware %d, Bootloader %d", firmwareVersion,
              bootloaderVersion);
     float battery1Voltage = 0.0f;
-    if (!getBatteryVoltage(Battery::BATTERY_1, battery1Voltage)) {
+    if (!getBatteryVoltage(battery_t::BATTERY_1, battery1Voltage)) {
         ESP_LOGE(TAG, "Failed to get battery 1 voltage");
         return false;
     }
     float battery2Voltage = 0.0f;
-    if (!getBatteryVoltage(Battery::BATTERY_2, battery2Voltage)) {
+    if (!getBatteryVoltage(battery_t::BATTERY_2, battery2Voltage)) {
         ESP_LOGE(TAG, "Failed to get battery 2 voltage");
         return false;
     }
@@ -49,13 +49,13 @@ bool AtomJoystick::begin(TwoWire &wire, uint8_t address, uint8_t sda,
              battery2Voltage);
 
     uint16_t battery1Value = 0;
-    if (!getBatteryValue(Battery::BATTERY_1, adc_mode_t::ADC_12BITS,
+    if (!getBatteryValue(battery_t::BATTERY_1, adc_mode_t::ADC_12BITS,
                          battery1Value)) {
         ESP_LOGE(TAG, "Failed to get battery 1 value");
         return false;
     }
     uint16_t battery2Value = 0;
-    if (!getBatteryValue(Battery::BATTERY_2, adc_mode_t::ADC_12BITS,
+    if (!getBatteryValue(battery_t::BATTERY_2, adc_mode_t::ADC_12BITS,
                          battery2Value)) {
         ESP_LOGE(TAG, "Failed to get battery 2 value");
         return false;
@@ -79,17 +79,17 @@ bool AtomJoystick::play(const melody_tone_t melody[], size_t size) const {
 }
 
 bool AtomJoystick::getFirmwareVersion(uint8_t &version) const {
-    return read(Register::FIRMWARE_VERSION, &version, sizeof(version));
+    return read(register_t::FIRMWARE_VERSION, &version, sizeof(version));
 }
 
 bool AtomJoystick::getBootLoaderVersion(uint8_t &version) const {
-    return read(Register::BOOTLOADER_VERSION, &version, sizeof(version));
+    return read(register_t::BOOTLOADER_VERSION, &version, sizeof(version));
 }
 
-bool AtomJoystick::getBatteryVoltage(Battery battery, float &voltage) const {
+bool AtomJoystick::getBatteryVoltage(battery_t battery, float &voltage) const {
     uint8_t data[sizeof(voltage)];
-    if (!read(battery == Battery::BATTERY_1 ? Register::BATTERY1_VOLTAGE
-                                            : Register::BATTERY2_VOLTAGE,
+    if (!read(battery == battery_t::BATTERY_1 ? register_t::BATTERY1_VOLTAGE
+                                              : register_t::BATTERY2_VOLTAGE,
               data, sizeof(data))) {
         ESP_LOGE(TAG, "Failed to read battery voltage");
         return false;
@@ -98,16 +98,16 @@ bool AtomJoystick::getBatteryVoltage(Battery battery, float &voltage) const {
     return true;
 }
 
-bool AtomJoystick::getBatteryValue(Battery battery, adc_mode_t mode,
+bool AtomJoystick::getBatteryValue(battery_t battery, adc_mode_t mode,
                                    uint16_t &value) const {
     uint8_t data[static_cast<uint8_t>(mode)];
-    if (!read(battery == Battery::BATTERY_1
+    if (!read(battery == battery_t::BATTERY_1
                   ? (mode == adc_mode_t::ADC_12BITS
-                         ? Register::BATTERY1_ADC_12BITS
-                         : Register::BATTERY1_ADC_8BITS)
+                         ? register_t::BATTERY1_ADC_12BITS
+                         : register_t::BATTERY1_ADC_8BITS)
                   : (mode == adc_mode_t::ADC_12BITS
-                         ? Register::BATTERY2_ADC_12BITS
-                         : Register::BATTERY2_ADC_8BITS),
+                         ? register_t::BATTERY2_ADC_12BITS
+                         : register_t::BATTERY2_ADC_8BITS),
               data, sizeof(data))) {
         ESP_LOGE(TAG, "Failed to read battery value");
         return false;
@@ -124,7 +124,7 @@ const char *AtomJoystick::getTag(void) const {
     return TAG;
 }
 
-bool AtomJoystick::read(Register reg, uint8_t *data, size_t size) const {
+bool AtomJoystick::read(register_t reg, uint8_t *data, size_t size) const {
     this->_wire->beginTransmission(this->_address);
     this->_wire->write(static_cast<uint8_t>(reg));
     if (this->_wire->endTransmission() != 0) {
