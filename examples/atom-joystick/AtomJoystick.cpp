@@ -67,6 +67,34 @@ bool AtomJoystick::begin(TwoWire &wire, uint8_t address, uint8_t sda,
 }
 
 bool AtomJoystick::update(void) {
+#if defined(CORE_DEBUG_LEVEL) && (CORE_DEBUG_LEVEL >= ESP_LOG_DEBUG)
+    uint16_t joy1_x = 0;
+    if (!getJoystickX(joystick_position_t::JOYSTICK_1, adc_mode_t::ADC_12BITS,
+                      joy1_x)) {
+        ESP_LOGE(TAG, "Failed to get Joystick 1 X value");
+        return false;
+    }
+    uint16_t joy1_y = 0;
+    if (!getJoystickY(joystick_position_t::JOYSTICK_1, adc_mode_t::ADC_12BITS,
+                      joy1_y)) {
+        ESP_LOGE(TAG, "Failed to get Joystick 1 Y value");
+        return false;
+    }
+    ESP_LOGD(TAG, "Joystick 1: X = %d, Y = %d", joy1_x, joy1_y);
+    uint16_t joy2_x = 0;
+    if (!getJoystickX(joystick_position_t::JOYSTICK_2, adc_mode_t::ADC_12BITS,
+                      joy2_x)) {
+        ESP_LOGE(TAG, "Failed to get Joystick 2 X value");
+        return false;
+    }
+    uint16_t joy2_y = 0;
+    if (!getJoystickY(joystick_position_t::JOYSTICK_2, adc_mode_t::ADC_12BITS,
+                      joy2_y)) {
+        ESP_LOGE(TAG, "Failed to get Joystick 2 Y value");
+        return false;
+    }
+    ESP_LOGD(TAG, "Joystick 2: X = %d, Y = %d", joy2_x, joy2_y);
+#endif
     return false;
 }
 
@@ -115,7 +143,51 @@ bool AtomJoystick::getBatteryValue(battery_position_t pos, adc_mode_t mode,
         return false;
     }
     if (mode == adc_mode_t::ADC_12BITS) {
-        value = ((data[1] << 8) | data[0]);
+        value = (data[1] << 8) | data[0];
+    } else {
+        value = data[0];
+    }
+    return true;
+}
+
+bool AtomJoystick::getJoystickX(joystick_position_t pos, adc_mode_t mode,
+                                uint16_t &value) const {
+    uint8_t data[static_cast<uint8_t>(mode)];
+    if (!read(pos == joystick_position_t::JOYSTICK_1
+                  ? (mode == adc_mode_t::ADC_12BITS
+                         ? register_t::JOY1_X_ADC_VALUE_12BITS
+                         : register_t::JOY1_X_ADC_VALUE_8BITS)
+                  : (mode == adc_mode_t::ADC_12BITS
+                         ? register_t::JOY2_X_ADC_VALUE_12BITS
+                         : register_t::JOY2_X_ADC_VALUE_8BITS),
+              data, sizeof(data))) {
+        ESP_LOGE(TAG, "Failed to read Joystick %d X value", pos);
+        return false;
+    }
+    if (mode == adc_mode_t::ADC_12BITS) {
+        value = (data[1] << 8) | data[0];
+    } else {
+        value = data[0];
+    }
+    return true;
+}
+
+bool AtomJoystick::getJoystickY(joystick_position_t pos, adc_mode_t mode,
+                                uint16_t &value) const {
+    uint8_t data[static_cast<uint8_t>(mode)];
+    if (!read(pos == joystick_position_t::JOYSTICK_1
+                  ? (mode == adc_mode_t::ADC_12BITS
+                         ? register_t::JOY1_Y_ADC_VALUE_12BITS
+                         : register_t::JOY1_Y_ADC_VALUE_8BITS)
+                  : (mode == adc_mode_t::ADC_12BITS
+                         ? register_t::JOY2_Y_ADC_VALUE_12BITS
+                         : register_t::JOY2_Y_ADC_VALUE_8BITS),
+              data, sizeof(data))) {
+        ESP_LOGE(TAG, "Failed to read Joystick %d Y value", pos);
+        return false;
+    }
+    if (mode == adc_mode_t::ADC_12BITS) {
+        value = (data[1] << 8) | data[0];
     } else {
         value = data[0];
     }

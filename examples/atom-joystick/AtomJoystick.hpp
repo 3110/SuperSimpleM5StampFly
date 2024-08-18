@@ -20,10 +20,14 @@ public:
      */
     enum class register_t
     {
-        JOY1_ADC_VALUE_128ITS = 0x00,
-        JOY1_ADC_VALUE_8BITS = 0x10,
-        JOY2_ADC_VALUE_128BITS = 0x20,
-        JOY2_ADC_VALUE_8BITS = 0x30,
+        JOY1_X_ADC_VALUE_12BITS = 0x00,
+        JOY1_X_ADC_VALUE_8BITS = 0x10,
+        JOY1_Y_ADC_VALUE_12BITS = 0x02,
+        JOY1_Y_ADC_VALUE_8BITS = 0x11,
+        JOY2_X_ADC_VALUE_12BITS = 0x20,
+        JOY2_X_ADC_VALUE_8BITS = 0x30,
+        JOY2_Y_ADC_VALUE_12BITS = 0x22,
+        JOY2_Y_ADC_VALUE_8BITS = 0x31,
         BATTERY1_ADC_12BITS = 0x40,
         BATTERY1_ADC_8BITS = 0x50,
         BATTERY2_ADC_12BITS = 0x42,
@@ -43,6 +47,14 @@ public:
     {
         ADC_8BITS = 1,
         ADC_12BITS = 2,
+    };
+    /**
+     * @brief ジョイスティックの位置
+     */
+    enum class joystick_position_t
+    {
+        JOYSTICK_1 = 1,
+        JOYSTICK_2,
     };
     /*
      * ボタンの種類
@@ -145,6 +157,26 @@ public:
      */
     virtual bool getBatteryValue(battery_position_t pos, adc_mode_t mode,
                                  uint16_t &value) const;
+
+    /**
+     * @brief ジョイスティックのX軸の値を取得します
+     * @param pos ジョイスティックの位置
+     * @param mode モード
+     * @param value ジョイスティックのX軸の値
+     * @return 取得が成功した場合はtrue、失敗した場合はfalse
+     */
+    virtual bool getJoystickX(joystick_position_t pos, adc_mode_t mode,
+                              uint16_t &value) const;
+
+    /**
+     * @brief ジョイスティックのY軸の値を取得します
+     * @param pos ジョイスティックの位置
+     * @param mode モード
+     * @param value ジョイスティックのY軸の値
+     * @return 取得が成功した場合はtrue、失敗した場合はfalse
+     */
+    virtual bool getJoystickY(joystick_position_t pos, adc_mode_t mode,
+                              uint16_t &value) const;
 
 protected:
     /**
