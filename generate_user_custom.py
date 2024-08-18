@@ -1,5 +1,11 @@
+from typing import Any
+
+Import = globals()["Import"] 
+
 Import("env")
 import os
+
+env: Any
 
 firmware_name = env.GetProjectOption("custom_firmware_name")
 firmware_version = env.GetProjectOption('custom_firmware_version')
