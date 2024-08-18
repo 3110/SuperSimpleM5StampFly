@@ -9,4 +9,5 @@ void setup(void) {
 }
 
 void loop(void) {
+    joystick.update();
 }

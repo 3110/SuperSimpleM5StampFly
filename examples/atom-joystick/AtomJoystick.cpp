@@ -66,6 +66,10 @@ bool AtomJoystick::begin(TwoWire &wire, uint8_t address, uint8_t sda,
     return play(STARTUP_MELODY, _countof(STARTUP_MELODY));
 }
 
+bool AtomJoystick::update(void) {
+    return false;
+}
+
 void AtomJoystick::beep(void) const {
     _melody.beep();
 }

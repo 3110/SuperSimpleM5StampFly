@@ -95,6 +95,12 @@ public:
                        uint8_t sda = SDA, uint8_t scl = SCL,
                        uint32_t frequency = I2C_FREQUENCY);
     /**
+     * @brief 状態の更新を行います
+     * @return 状態が更新されたらtrue、更新されなかったらfalse
+     */
+    virtual bool update(void);
+
+    /**
      * @brief ビープ音を鳴らします
      */
     virtual void beep(void) const;
