@@ -47,7 +47,7 @@ public:
     /*
      * ボタンの種類
      */
-    enum class button_t
+    enum class button_position_t
     {
         BUTTON_1 = 0,
         BUTTON_2,
@@ -57,7 +57,7 @@ public:
     /**
      * @brief バッテリの位置
      */
-    enum class battery_t
+    enum class battery_position_t
     {
         BATTERY_1 = 0,
         BATTERY_2,
@@ -129,20 +129,21 @@ public:
 
     /**
      * @brief バッテリーの電圧を取得します
-     * @param battery バッテリーの位置
+     * @param pos バッテリーの位置
      * @param voltage バッテリーの電圧
      * @return 取得が成功した場合はtrue、失敗した場合はfalse
      */
-    virtual bool getBatteryVoltage(battery_t battery, float &voltage) const;
+    virtual bool getBatteryVoltage(battery_position_t pos,
+                                   float &voltage) const;
 
     /**
      * @brief バッテリーの値を取得します
-     * @param battery バッテリーの位置
+     * @param pos バッテリーの位置
      * @param mode モード
      * @param value バッテリーの値
      * @return 取得が成功した場合はtrue、失敗した場合はfalse
      */
-    virtual bool getBatteryValue(battery_t battery, adc_mode_t mode,
+    virtual bool getBatteryValue(battery_position_t pos, adc_mode_t mode,
                                  uint16_t &value) const;
 
 protected:
