@@ -76,6 +76,7 @@ public:
      * @param buzzerPin ブザーのピン番号
      */
     AtomJoystick(uint8_t buzzerPin = BUZZER_PIN);
+
     /**
      * @brief デストラクタ
      */
@@ -97,6 +98,7 @@ public:
      * @brief ビープ音を鳴らします
      */
     virtual void beep(void) const;
+
     /**
      * @brief メロディを再生します
      * @param melody メロディ
