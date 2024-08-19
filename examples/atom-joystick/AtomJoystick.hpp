@@ -1,8 +1,35 @@
 #pragma once
 
 #include <Wire.h>
-#include <esp_log.h>
 
+#if !__has_include(<M5Unified.h>)
+#include <utility/Log_Class.hpp>
+namespace m5gfx {
+__attribute__((unused)) static inline unsigned long millis(void) {
+    return (unsigned long)(esp_timer_get_time() / 1000ULL);
+}
+}  // namespace m5gfx
+#undef M5_LOGE
+#define M5_LOGE(format, ...)                                          \
+    AtomJoystick::Log(ESP_LOG_ERROR, M5UNIFIED_LOG_FORMAT(E, format), \
+                      ##__VA_ARGS__)
+#undef M5_LOGW
+#define M5_LOGW(format, ...)                                         \
+    AtomJoystick::Log(ESP_LOG_WARN, M5UNIFIED_LOG_FORMAT(W, format), \
+                      ##__VA_ARGS__)
+#undef M5_LOGI
+#define M5_LOGI(format, ...)                                         \
+    AtomJoystick::Log(ESP_LOG_INFO, M5UNIFIED_LOG_FORMAT(I, format), \
+                      ##__VA_ARGS__)
+#undef M5_LOGD
+#define M5_LOGD(format, ...)                                          \
+    AtomJoystick::Log(ESP_LOG_DEBUG, M5UNIFIED_LOG_FORMAT(D, format), \
+                      ##__VA_ARGS__)
+#undef M5_LOGV
+#define M5_LOGV(format, ...)                                            \
+    AtomJoystick::Log(ESP_LOG_VERBOSE, M5UNIFIED_LOG_FORMAT(V, format), \
+                      ##__VA_ARGS__)
+#endif
 #include "Melody.hpp"
 
 class AtomJoystick {
@@ -82,6 +109,10 @@ public:
      * @brief 起動時に再生するメロディ
      */
     static const melody_tone_t STARTUP_MELODY[];
+    /**
+     * @brief ログ出力用インスタンス
+     */
+    static m5::Log_Class Log;
 
     /**
      * @brief コンストラクタ
