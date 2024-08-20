@@ -1,7 +1,5 @@
 #include "AtomJoystick.hpp"
 
-static constexpr char TAG[] = "AtomJoystick";
-
 const melody_tone_t AtomJoystick::STARTUP_MELODY[] = {
     {NOTE_D4, 200},
     {NOTE_A4, 200},
@@ -35,7 +33,7 @@ bool AtomJoystick::begin(TwoWire &wire, uint8_t address, uint8_t sda,
         M5_LOGE("Failed to get bootloader version");
         return false;
     }
-    ESP_LOGD(TAG, "Version: Firmware %d, Bootloader %d", firmwareVersion,
+    M5_LOGD("Version: Firmware %d, Bootloader %d", firmwareVersion,
              bootloaderVersion);
     float battery1Voltage = 0.0f;
     if (!getBatteryVoltage(battery_position_t::BATTERY_1, battery1Voltage)) {
@@ -193,10 +191,6 @@ bool AtomJoystick::getJoystickY(joystick_position_t pos, adc_mode_t mode,
         value = data[0];
     }
     return true;
-}
-
-const char *AtomJoystick::getTag(void) const {
-    return TAG;
 }
 
 bool AtomJoystick::read(register_t reg, uint8_t *data, size_t size) const {

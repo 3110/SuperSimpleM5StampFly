@@ -211,12 +211,6 @@ public:
 
 protected:
     /**
-     * @brief ログ出力用のタグを取得します
-     * @return タグ
-     */
-    virtual const char *getTag(void) const;
-
-    /**
      * @brief I2Cでデータを読み込みます
      * @param register レジスタ
      * @param data データ
